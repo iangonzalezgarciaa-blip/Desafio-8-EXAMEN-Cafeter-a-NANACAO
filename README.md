@@ -2,54 +2,35 @@
 
 ## Descripción
 
-En esta prueba trabajé con una API REST de una cafetería y desarrollé los tests solicitados con **Jest** y **Supertest**. Comprobé los códigos HTTP, los datos devueltos y el comportamiento de las operaciones sobre cafés.
+En esta prueba desarrollé cuatro tests con Jest y Supertest para comprobar las rutas de la API REST de Cafetería Nanacao. Utilicé la estructura del servidor entregado en el material de apoyo, con los datos de `cafes.json` y el archivo `tests/server.spec.js`.
 
-## Tecnologías que utilicé
-
-- Node.js y Express para la API REST.
-- Jest para organizar y ejecutar los tests.
-- Supertest para realizar solicitudes HTTP al servidor durante las pruebas.
-
-## Cómo ejecutar mi proyecto
+## Instalación y ejecución
 
 1. Instalo las dependencias con `npm install`.
-2. Ejecuto las cuatro pruebas con `npm test`.
-3. Si quiero consultar manualmente la API, inicio el servidor con `npm start` y utilizo `http://localhost:3000`.
+2. Ejecuto mis pruebas con `npm test`.
+3. Para consultar las rutas manualmente, inicio la API con `npm start` en `http://localhost:3000`.
 
-## Pruebas que implementé
+## Pruebas implementadas
 
-| Caso | Verificación |
+| Prueba | Resultado que compruebo |
 | --- | --- |
-| `GET /cafes` | Compruebo el código 200 y que recibo un arreglo con al menos un objeto. |
-| `DELETE /cafes/:id` | Compruebo el código 404 cuando intento eliminar un café que no existe. |
-| `POST /cafes` | Registro un café y compruebo el código 201. También verifico que aparece en el listado. |
-| `PUT /cafes/:id` | Compruebo el código 400 cuando el ID de la URL es distinto al ID del cuerpo de la solicitud. |
+| GET `/cafes` | Código HTTP 200, arreglo con al menos un objeto |
+| DELETE `/cafes/:id` | Código HTTP 404 para un ID inexistente |
+| POST `/cafes` | Código HTTP 201 y café nuevo dentro del arreglo devuelto |
+| PUT `/cafes/:id` | Código HTTP 400 cuando el ID de la ruta es diferente al del cuerpo |
 
-## Estructura
+En la prueba de eliminación envío la cabecera `Authorization`, porque la ruta del servidor original requiere su presencia para procesar la solicitud. Para el POST verifico la respuesta en formato arreglo, tal como la devuelve el servidor.
+
+## Organización
 
 ```text
-app.js
+cafes.json
 index.js
 package.json
-tests/cafes.test.js
-README.md
+tests/server.spec.js
+.github/workflows/pruebas.yml
 ```
 
-## Consideraciones
+## Comprobación automatizada
 
-El PDF de la prueba menciona un **servidor de apoyo** que no estaba incluido en el archivo adjunto. Por eso preparé una versión autónoma de la API con las rutas necesarias y datos en memoria. Separé la aplicación del archivo de inicio para ejecutar los tests con Supertest sin abrir un puerto y restablecer los datos antes de cada caso.
-
-## Pruebas
-
-Mis cuatro pruebas con Jest y Supertest verifican GET /cafes (200 y arreglo), DELETE con identificador inexistente (404), POST de un café (201) y PUT con identificadores diferentes (400).
-
-Ejecuto las pruebas con:
-
-```bash
-npm install
-npm test
-```
-
-**Resultado de GitHub Actions:** ejecución exitosa. [Ver la ejecución de mis pruebas](https://github.com/iangonzalezgarciaa-blip/Desafio-8-EXAMEN-Cafeter-a-NANACAO/actions/runs/40827572520).
-
-Las pruebas automatizadas no constituyen por sí solas una validación de integración con PostgreSQL o con material de apoyo externo.
+Configuré GitHub Actions para instalar dependencias, verificar la sintaxis y ejecutar `npm test`. Consulto la evidencia de la última ejecución desde la [pestaña Actions](https://github.com/iangonzalezgarciaa-blip/Desafio-8-EXAMEN-Cafeter-a-NANACAO/actions).
